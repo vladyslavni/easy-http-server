@@ -5,7 +5,7 @@ namespace easy_http_server
 {
     public static class ListRandom
     {
-        public static String GetRandomValue(this List<string> list)
+        public static T GetRandomValue<T>(this List<T> list)
         {
             Random random = new Random();
             int index = random.Next(list.Count);

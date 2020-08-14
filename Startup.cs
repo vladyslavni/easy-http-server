@@ -32,42 +32,42 @@ namespace easy_http_server
                 endpoints.MapGet("/who", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf8";
-                    context.Response.Headers["InCamp-Student"] = "Nicolenco Vladislav";
+                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
                     await context.Response.WriteAsync(generator.GetRandomWho());
                 });
                 
                 endpoints.MapGet("/how", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf8";
-                    context.Response.Headers["InCamp-Student"] = "Nicolenco Vladislav";
+                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
                     await context.Response.WriteAsync(generator.GetRandomHow());
                 });
                 
                 endpoints.MapGet("/does", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf8";
-                    context.Response.Headers["InCamp-Student"] = "Nicolenco Vladislav";
+                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
                     await context.Response.WriteAsync(generator.GetRandomDoes());
                 });
                 
                 endpoints.MapGet("/what", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf8";
-                    context.Response.Headers["InCamp-Student"] = "Nicolenco Vladislav";
+                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
                     await context.Response.WriteAsync(generator.GetRandomWhat());
                 });
                                 
                 endpoints.MapGet("/quote", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf8";
-                    context.Response.Headers["InCamp-Student"] = "Nicolenco Vladislav";
+                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
                     await context.Response.WriteAsync(generator.GetRandomQuote());
                 });
 
                 endpoints.MapGet("/incamp18-quote", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf8";
-                    
+                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
                     string text = BuildResponseData();
                    
                     await context.Response.WriteAsync(text);
