@@ -1,7 +1,7 @@
 using System;
 namespace easy_http_server
 {
-    public class ResponseInfo<T,K>
+    public struct ResponseInfo<T,K>
     {
         public readonly T body;
         public readonly K user;

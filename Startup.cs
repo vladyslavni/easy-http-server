@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using Extension;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Net;
 
@@ -11,16 +11,18 @@ namespace easy_http_server
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services)
-        {
-        }
+        static Dictionary<string, Func<string>> ways = new Dictionary<string, Func<string>>();
 
-        private readonly HttpListener listener = new HttpListener();
-        private RandomWordGenerator generator = new RandomWordGenerator();
-        private List<string> urls = new List<string>{"5002"};
+        private List<string> urls = new List<string>{"http://localhost:5002"};
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            ways.Add("who", RandomWordGenerator.GetRandomWho); 
+            ways.Add("how", RandomWordGenerator.GetRandomHow);
+            ways.Add("does", RandomWordGenerator.GetRandomDoes);
+            ways.Add("what", RandomWordGenerator.GetRandomWhat);
+            ways.Add("quote", RandomWordGenerator.GetRandomQuote);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -29,41 +31,15 @@ namespace easy_http_server
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/who", async context =>
+                endpoints.MapGet("/{way}", async context =>
                 {
-                    context.Response.ContentType = "text/html; charset=utf8";
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
-                    await context.Response.WriteAsync(generator.GetRandomWho());
-                });
-                
-                endpoints.MapGet("/how", async context =>
-                {
-                    context.Response.ContentType = "text/html; charset=utf8";
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
-                    await context.Response.WriteAsync(generator.GetRandomHow());
-                });
-                
-                endpoints.MapGet("/does", async context =>
-                {
-                    context.Response.ContentType = "text/html; charset=utf8";
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
-                    await context.Response.WriteAsync(generator.GetRandomDoes());
-                });
-                
-                endpoints.MapGet("/what", async context =>
-                {
-                    context.Response.ContentType = "text/html; charset=utf8";
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
-                    await context.Response.WriteAsync(generator.GetRandomWhat());
-                });
-                                
-                endpoints.MapGet("/quote", async context =>
-                {
-                    context.Response.ContentType = "text/html; charset=utf8";
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
-                    await context.Response.WriteAsync(generator.GetRandomQuote());
-                });
+                    string way = context.Request.RouteValues["way"].ToString();
 
+                    context.Response.ContentType = "text/html; charset=utf8";
+                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
+                    await context.Response.WriteAsync(ways[way]());
+                });
+                            
                 endpoints.MapGet("/incamp18-quote", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf8";
@@ -87,14 +63,20 @@ namespace easy_http_server
             ResponseInfo<string, string> doesInfo = doesResponse.GetInformation();
             ResponseInfo<string, string> whatInfo = whatResponse.GetInformation();
             
-            return whoInfo.body + " " + howInfo.body + " " + doesInfo.body + " " + whatInfo.body + "</br>" +
-                whoInfo.GetFullInfo() + "</br>" + howInfo.GetFullInfo() + "</br>" + doesInfo.GetFullInfo() + "</br>" + whatInfo.GetFullInfo();
+            return whoInfo.body + " " + 
+                    howInfo.body + " " + 
+                    doesInfo.body + " " + 
+                    whatInfo.body + "</br>" +
+                    whoInfo.GetFullInfo() + "</br>" + 
+                    howInfo.GetFullInfo() + "</br>" + 
+                    doesInfo.GetFullInfo() + "</br>" + 
+                    whatInfo.GetFullInfo();
         }
     
-        private WebResponse MakeRequestToStudent(string port, string endpoint)
-        {
-            WebRequest request = WebRequest.Create($"http://localhost:{port}/{endpoint}");
-            return request.GetResponse();
+        private WebResponse MakeRequestToStudent(string url, string endpoint)
+        {  
+                WebRequest request = WebRequest.Create($"{url}/{endpoint}");
+                return request.GetResponse();
         }
     }
 }

@@ -1,36 +1,40 @@
 using System.Collections.Generic;
+using Extension;
 
 namespace easy_http_server
 {
     public class RandomWordGenerator
     {
-        List<string> who = new List<string>{"Псина сутулая", "Котяра", "Бабёр", "Картофельный король", "Nul", "Братюня"};
-        List<string> how = new List<string>{"без раздумий", "уверенно", "думая"};
-        List<string> does = new List<string>{"кричит:", "говорит:", "выдаёт:", "огрызается:"};
-        List<string> what = new List<string>{"Лави аптечку", "Аннигиляторная пууушкаааа", "Deus Vult", 
-        "Я желаю всем мужчинам пройти афганскую войну. Аллах акбар", "Здарова, начальник! Начальник, привет! У нас тут тепло Котлетки в обед Поторопись!"};
+        static readonly List<string> who = new List<string>{"Псина сутулая", "Картофельный король", "Молекулярный Дядько", "Шизоидный дед", 
+        "Ниггер-Трансформер", "Твой Отец который ушёл 8 лет назад", "Душитель чужих ужей"};
+        static readonly List<string> how = new List<string>{"без раздумий", "уверенно", "игриво поглаживая усики", "сексуально", "нежно", 
+        "плавно снимая штаны", "рвя на себе последние трусы", "как в последний раз развратно и похотливо"};
+        static readonly List<string> does = new List<string>{"совращает", "анализирует", "облизывает", "массирует",
+        "пожирает взгядом", "входит в"};
+        static readonly List<string> what = new List<string>{"клавиатуру", "бабушку", "твой говно код", "Транс-Программиста ", "системник", 
+        "тебя", "твоего кота", "китайца из уханя", "Игоря"};
 
-        public string GetRandomWho() 
+        public static string GetRandomWho() 
         {
             return who.GetRandomValue();
         }
 
-        public string GetRandomHow() 
+        public static string GetRandomHow() 
         {
             return how.GetRandomValue();
         }
 
-        public string GetRandomDoes() 
+        public static string GetRandomDoes() 
         {
             return does.GetRandomValue();
         }
 
-        public string GetRandomWhat() 
+        public static string GetRandomWhat() 
         {
             return what.GetRandomValue();
         }
 
-        public string GetRandomQuote()
+        public static string GetRandomQuote()
         {
             return GetRandomWho() + " " + GetRandomHow() + " " + 
                     GetRandomDoes() + " " + GetRandomWhat();
