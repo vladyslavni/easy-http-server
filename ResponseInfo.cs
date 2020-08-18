@@ -1,12 +1,12 @@
 using System;
 namespace easy_http_server
 {
-    public struct ResponseInfo<T,K>
+    public struct ResponseInfo
     {
-        public readonly T body;
-        public readonly K user;
+        public readonly string body;
+        public readonly string user;
     
-        public ResponseInfo(T body, K user)
+        public ResponseInfo(string body, string user)
         {
             this.body = body;
             this.user = user;
