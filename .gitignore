@@ -431,3 +431,10 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+/out/appsettings.Development.json
+/out/web.config
+/out/easy-http-server.exe
+/out/appsettings.json
+/out/easy-http-server.dll
+/out/easy-http-server.deps.json
+/out/easy-http-server.runtimeconfig.json
