@@ -17,10 +17,9 @@ namespace easy_http_server
             return await Task.WhenAll(requests)
                     .ContinueWith(async task =>
                             task.Result.Select(response => response.GetInformation()).ToList()).Result;
-            
         }
 
-        public static async Task<WebResponse> MakeRequest(string url, string endpoint)
+        private async Task<WebResponse> MakeRequest(string url, string endpoint)
         {  
             return await WebRequest.Create($"{url}/{endpoint}").GetResponseAsync();
         }

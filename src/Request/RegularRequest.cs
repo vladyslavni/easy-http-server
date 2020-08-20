@@ -2,7 +2,6 @@ using Extension;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Net.Http;
 using System.Net;
 
 namespace easy_http_server
@@ -16,7 +15,7 @@ namespace easy_http_server
                                         .Select(request => request.GetInformation()).ToList();
         }
 
-        public static WebResponse MakeRequest(string url, string endpoint)
+        private WebResponse MakeRequest(string url, string endpoint)
         {  
             return WebRequest.Create($"{url}/{endpoint}").GetResponse();
         }

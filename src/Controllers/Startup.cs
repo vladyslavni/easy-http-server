@@ -20,15 +20,38 @@ namespace easy_http_server
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/{way}", async context =>
+                endpoints.MapGet("/who", async context =>
                 {
                     context.toUtf8();
                     context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
-                    string endpoint = context.Request.RouteValues["way"].ToString();
 
-                    await context.Response.WriteAsync(Quote.getWord(endpoint));
+                    await context.Response.WriteAsync(Quote.GetRandomWho());
                 });
 
+                endpoints.MapGet("/how", async context =>
+                {
+                    context.toUtf8();
+                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
+
+                    await context.Response.WriteAsync(Quote.GetRandomHow());
+                });
+
+                endpoints.MapGet("/does", async context =>
+                {
+                    context.toUtf8();
+                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
+
+                    await context.Response.WriteAsync(Quote.GetRandomDoes());
+                });
+
+                endpoints.MapGet("/what", async context =>
+                {
+                    context.toUtf8();
+                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
+
+                    await context.Response.WriteAsync(Quote.GetRandomWhat());
+                });
+                
                 endpoints.MapGet("/quote", async context =>
                 {
                     context.toUtf8();
@@ -44,7 +67,7 @@ namespace easy_http_server
 
                     context.toUtf8();
                     context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
-                    List<ResponseInfo> info = await new AsyncRequest().makeRequest();
+                    List<ResponseInfo> info = await new RegularRequest().makeRequest();
                     
                     timer.End();
                     await context.Response.WriteAsync(info.BuildResponse() + "<br>" + timer.GetTime());
