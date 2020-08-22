@@ -1,43 +1,61 @@
+using System.Reflection;
 using System;
-using System.Collections.Generic;
-
+using System.Linq;
 namespace easy_http_server
 {
     public class Params
     {
-        private static List<IParameter> parameters = new List<IParameter>();
-        static Params()
-        {
-            Action helpFunc = () => {
-                parameters.ForEach(p => Console.WriteLine(p));
-                Environment.Exit(0);
-            };
-            Action asyncFunc = () => {
-                ConfigParams.RequestType = new AsyncRequest();
-            };
-            Action<string> portFunc = (value) => {
-                ConfigParams.Port = value;
-                Console.WriteLine(ConfigParams.Port);
-            };
-
-            parameters.Add(new Parameter("-h", "--help", "Show help message", helpFunc));
-            parameters.Add(new Parameter("-a", "--async", "Use Async for incamp18-qoute. (Accelerates work, but uses more system resources)", asyncFunc));
-            parameters.Add(new ValuedParameter("--port", "Set the port on which the program will run", portFunc));
-
-        }
-
         public static void ApplyParameters(string[] args)
-        {
-            foreach (var argument in args)
+        {   
+            Argument[] arguments = ParseArguments(args);
+            MethodInfo[] methods = FindMethods();
+
+            foreach (var argument in arguments)
             {
-                foreach (var parameter in parameters)
+                foreach (var method in methods)
                 {
-                    if (parameter.IsValid(argument))
+                    var att = method.GetCustomAttribute(typeof(Parameter), false);
+                
+                    Parameter parameter = (Parameter) att;
+                    if (parameter.key == argument.key || parameter.fullKey == argument.key)
                     {
-                        parameter.Apply();
+                        if (argument.value != null)
+                        {
+                            method.Invoke(null, new string[]{argument.value});
+                        } else {
+                            method.Invoke(null, null);
+                        }
                     }
                 }
             }
+        }
+
+        public static MethodInfo[] FindMethods()
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(x => x.GetTypes())
+                    .Where(x => x.IsClass)
+                    .SelectMany(x => x.GetMethods())
+                    .Where(x => x.GetCustomAttributes(typeof(Parameter), false).FirstOrDefault() != null)
+                    .ToArray();
+        }
+
+        private static Argument[] ParseArguments(string[] args)
+        {
+            Argument[] arguments = new Argument[args.Length];
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i].Contains("="))
+                {
+                    string[] valuedArg = args[i].Split("=");
+                    arguments[i] = new Argument(valuedArg[0], valuedArg[1]);
+                } else {
+                    arguments[i] = new Argument(args[i], null);
+                }
+            }
+
+            return arguments;
         }
     }
 }
