@@ -67,7 +67,7 @@ namespace easy_http_server
 
                     context.toUtf8();
                     context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
-                    List<ResponseInfo> info = await new RegularRequest().makeRequest();
+                    List<ResponseInfo> info = await ConfigParams.RequestType.makeRequest();
                     
                     timer.End();
                     await context.Response.WriteAsync(info.BuildResponse() + "<br>" + timer.GetTime());

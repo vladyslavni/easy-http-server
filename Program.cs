@@ -7,15 +7,18 @@ namespace easy_http_server
     {
         public static void Main(string[] args)
         {
+            Params.ApplyParameters(args);
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args) 
+        {
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://0.0.0.0:5002");
+                    webBuilder.UseUrls("http://0.0.0.0:" + ConfigParams.Port);
                     webBuilder.UseStartup<Startup>();
                 });
+        }
     }
 }
