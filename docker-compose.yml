@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+    first-api:
+        image: easy-http-server
+        build:
+            context: .
+            shm_size: '50mb'
+        command: -a --port=112
+        ports:
+            - "112:80"
+
+    second-api:
+        image: easy-http-server
+        build:
+            context: .
+            shm_size: '50mb'
+        command: --port=113
+        ports:
+            - "113:80"
+
+    third-api:
+        image: easy-http-server
+        build:
+            context: .
+            shm_size: '50mb'
+        command: -a --port=114
+        ports:
+            - "114:80"

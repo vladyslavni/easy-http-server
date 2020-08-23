@@ -23,7 +23,7 @@ namespace easy_http_server
                 endpoints.MapGet("/who", async context =>
                 {
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
+                    context.Response.Headers.Add("InCamp-Student", Environment.CurrentManagedThreadId.ToString());
 
                     await context.Response.WriteAsync(Quote.GetRandomWho());
                 });
@@ -31,7 +31,7 @@ namespace easy_http_server
                 endpoints.MapGet("/how", async context =>
                 {
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
+                    context.Response.Headers.Add("InCamp-Student", Environment.CurrentManagedThreadId.ToString());
 
                     await context.Response.WriteAsync(Quote.GetRandomHow());
                 });
@@ -39,7 +39,7 @@ namespace easy_http_server
                 endpoints.MapGet("/does", async context =>
                 {
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
+                    context.Response.Headers.Add("InCamp-Student",Environment.CurrentManagedThreadId.ToString());
 
                     await context.Response.WriteAsync(Quote.GetRandomDoes());
                 });
@@ -47,7 +47,7 @@ namespace easy_http_server
                 endpoints.MapGet("/what", async context =>
                 {
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
+                    context.Response.Headers.Add("InCamp-Student", Environment.CurrentManagedThreadId.ToString());
 
                     await context.Response.WriteAsync(Quote.GetRandomWhat());
                 });
@@ -55,7 +55,7 @@ namespace easy_http_server
                 endpoints.MapGet("/quote", async context =>
                 {
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
+                    context.Response.Headers.Add("InCamp-Student", Environment.CurrentManagedThreadId.ToString());
 
                     await context.Response.WriteAsync(Quote.GetQuote());
                 });
@@ -66,7 +66,7 @@ namespace easy_http_server
                     timer.Start();
 
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", "Nicolenco Vladislav");
+                    context.Response.Headers.Add("InCamp-Student", Environment.CurrentManagedThreadId.ToString());
                     List<ResponseInfo> info = await ConfigParams.RequestType.makeRequest();
                     
                     timer.End();
