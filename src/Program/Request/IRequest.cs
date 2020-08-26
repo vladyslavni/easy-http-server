@@ -5,6 +5,6 @@ namespace easy_http_server
 {
     public interface IRequest
     {
-        Task<List<ResponseInfo>> makeRequest();
+        Task<List<ResponseInfo>> makeRequest(string[] urls);
     }
 }

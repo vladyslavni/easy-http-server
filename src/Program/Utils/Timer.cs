@@ -16,9 +16,9 @@ namespace easy_http_server
             this.end = DateTime.Now;
         }
 
-        public string GetTime()
+        public TimeSpan GetTime()
         {
-            return (end - start).ToString();
+            return (end - start);
         }
     }
 }
