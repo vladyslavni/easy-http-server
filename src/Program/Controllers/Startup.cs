@@ -1,3 +1,4 @@
+using System.Net;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
@@ -23,7 +24,7 @@ namespace easy_http_server
                 endpoints.MapGet("/who", async context =>
                 {
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", Environment.CurrentManagedThreadId.ToString());
+                    context.Response.Headers.Add("InCamp-Student", Dns.GetHostName().ToString());
 
                     await context.Response.WriteAsync(Quote.GetRandomWho());
                 });
@@ -31,7 +32,7 @@ namespace easy_http_server
                 endpoints.MapGet("/how", async context =>
                 {
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", Environment.CurrentManagedThreadId.ToString());
+                    context.Response.Headers.Add("InCamp-Student", Dns.GetHostName().ToString());
 
                     await context.Response.WriteAsync(Quote.GetRandomHow());
                 });
@@ -39,7 +40,7 @@ namespace easy_http_server
                 endpoints.MapGet("/does", async context =>
                 {
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student",Environment.CurrentManagedThreadId.ToString());
+                    context.Response.Headers.Add("InCamp-Student", Dns.GetHostName().ToString());
 
                     await context.Response.WriteAsync(Quote.GetRandomDoes());
                 });
@@ -47,7 +48,7 @@ namespace easy_http_server
                 endpoints.MapGet("/what", async context =>
                 {
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", Environment.CurrentManagedThreadId.ToString());
+                    context.Response.Headers.Add("InCamp-Student", Dns.GetHostName().ToString());
 
                     await context.Response.WriteAsync(Quote.GetRandomWhat());
                 });
@@ -55,7 +56,7 @@ namespace easy_http_server
                 endpoints.MapGet("/quote", async context =>
                 {
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", Environment.CurrentManagedThreadId.ToString());
+                    context.Response.Headers.Add("InCamp-Student", Dns.GetHostName().ToString());
 
                     await context.Response.WriteAsync(Quote.GetQuote());
                 });
@@ -66,8 +67,11 @@ namespace easy_http_server
                     timer.Start();
 
                     context.toUtf8();
-                    context.Response.Headers.Add("InCamp-Student", Environment.CurrentManagedThreadId.ToString());
-                    List<ResponseInfo> info = await ConfigParams.RequestType.makeRequest();
+                    context.Response.Headers.Add("InCamp-Student", Dns.GetHostName().ToString());
+
+                    IUrlStorage urlStorage = ConfigParams.UrlStorage;
+                    string[] urls = ConfigParams.RandomUrl.Random(urlStorage.Get());
+                    List<ResponseInfo> info = await ConfigParams.RequestType.makeRequest(urls);
                     
                     timer.End();
                     await context.Response.WriteAsync(info.BuildResponse() + "<br>" + timer.GetTime());

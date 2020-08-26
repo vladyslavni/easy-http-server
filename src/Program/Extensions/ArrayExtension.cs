@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Extension
 {
@@ -7,8 +8,14 @@ namespace Extension
         private static Random rand = new Random();
         public static T GetRandomValue<T>(this T[] array)
         {
-            int index = rand.Next(0, array.Length);
+            int index = rand.Next(array.Length);
             return array[index];
+        }
+
+        public static T GetRandomValue<T>(this List<T> list)
+        {
+            int index = rand.Next(list.Count);
+            return list[index];
         }
     }
 }
