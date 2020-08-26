@@ -5,6 +5,6 @@ namespace easy_http_server
 {
     public interface IRandom
     {
-        string[] Random(List<string> urls);
+        string[] GetRandomUrls(List<string> urls);
     }
 }

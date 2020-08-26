@@ -27,10 +27,18 @@ namespace easy_http_server
         }
 
 
-        [Parameter("--repeat-urls", "Enable links repetitions for queries.")]
+        [Parameter("-r", "--repeat-urls", "Enable links repetitions for queries.")]
         public static void RepeatParam(string value)
         {
             ConfigParams.RandomUrl = new RandomWithRepetitions();
+        }
+
+        
+        [Parameter("--urls", "List of URLs for queries.Write URLs via ','.")]
+        public static void UrlsParam(string value)
+        {
+            string[] urls = value.Split(",");
+            ConfigParams.UrlStorage.AddAll(urls);
         }
     }
 }

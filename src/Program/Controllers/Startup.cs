@@ -1,6 +1,6 @@
 using System.Net;
-using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -70,13 +70,20 @@ namespace easy_http_server
                     context.Response.Headers.Add("InCamp-Student", Dns.GetHostName().ToString());
 
                     IUrlStorage urlStorage = ConfigParams.UrlStorage;
-                    string[] urls = ConfigParams.RandomUrl.Random(urlStorage.Get());
-                    List<ResponseInfo> info = await ConfigParams.RequestType.makeRequest(urls);
+                    string[] urls = ConfigParams.RandomUrl.GetRandomUrls(urlStorage.Get());
+                    WebResponse[] responses = await ConfigParams.RequestType.makeRequest(urls);
                     
+                    ResponseInfo[] info = responses.Select(r => r.GetInformation()).ToArray();
+
                     timer.End();
                     await context.Response.WriteAsync(info.BuildResponse() + "<br>" + timer.GetTime());
                 });
             });
+        }
+
+        public static async Task<WebResponse> MakeRequest(string url, string endpoint)
+        {  
+            return await WebRequest.Create($"{url}/{endpoint}").GetResponseAsync();
         }
     }
 }

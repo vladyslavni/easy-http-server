@@ -9,21 +9,14 @@ namespace easy_http_server
 {
     public class AsyncRequest : IRequest
     {
-        public async Task<List<ResponseInfo>> makeRequest(string[] urls)
+        public async Task<WebResponse[]> makeRequest(string[] urls)
         {
-            Task<WebResponse> whoResponse = Task.Run( () => MakeRequest(urls[0], "who"));
-            Task<WebResponse> howResponse = Task.Run( () => MakeRequest(urls[1], "how"));
-            Task<WebResponse> doesResponse = Task.Run( () => MakeRequest(urls[2], "does"));
-            Task<WebResponse> whatResponse = Task.Run( () => MakeRequest(urls[3], "what"));
+            Task<WebResponse> whoResponse = Task.Run( () => Startup.MakeRequest(urls[0], "who"));
+            Task<WebResponse> howResponse = Task.Run( () => Startup.MakeRequest(urls[1], "how"));
+            Task<WebResponse> doesResponse = Task.Run( () => Startup.MakeRequest(urls[2], "does"));
+            Task<WebResponse> whatResponse = Task.Run( () => Startup.MakeRequest(urls[3], "what"));
 
-            return await Task.WhenAll(whoResponse, howResponse, doesResponse, whatResponse)
-                    .ContinueWith(async task =>
-                            task.Result.Select(response => response.GetInformation()).ToList()).Result;
-        }
-
-        private async Task<WebResponse> MakeRequest(string url, string endpoint)
-        {  
-            return await WebRequest.Create($"{url}/{endpoint}").GetResponseAsync();
+            return await Task.WhenAll(whoResponse, howResponse, doesResponse, whatResponse);
         }
     }
 }

@@ -8,9 +8,9 @@ namespace easy_http_server
     {
         private static Random rand = new Random();
 
-        public string[] Random(List<string> urls)
+        public string[] GetRandomUrls(List<string> urls)
         {
-            if( urls.Count < 4) return new RandomWithRepetitions().Random(urls);
+            if( urls.Count < 4) return new RandomWithRepetitions().GetRandomUrls(urls);
 
             return urls.Select(x => new { value = x, order = rand.Next() })
                 .OrderBy(x => x.order)

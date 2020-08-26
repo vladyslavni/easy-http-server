@@ -8,7 +8,7 @@ namespace easy_http_server
 {
     public class RandomWithRepetitions : IRandom
     {
-        public string[] Random(List<string> urls)
+        public string[] GetRandomUrls(List<string> urls)
         {
             string[] result = new string[4];
 

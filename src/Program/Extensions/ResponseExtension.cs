@@ -27,7 +27,7 @@ namespace Extension
             return new ResponseInfo(endpointValue, endpointStudent);
         }
     
-        public static string BuildResponse(this List<ResponseInfo> responses)
+        public static string BuildResponse(this ResponseInfo[] responses)
         {
             string result = "";
 
