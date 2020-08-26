@@ -19,12 +19,7 @@ namespace easy_http_server
                     Parameter parameter = (Parameter) att;
                     if (parameter.key == argument.key || parameter.fullKey == argument.key)
                     {
-                        if (argument.value != null)
-                        {
-                            method.Invoke(null, new string[]{argument.value});
-                        } else {
-                            method.Invoke(null, null);
-                        }
+                        method.Invoke(null, new string[]{argument.value});
                     }
                 }
             }
@@ -51,7 +46,7 @@ namespace easy_http_server
                     string[] valuedArg = args[i].Split("=");
                     arguments[i] = new Argument(valuedArg[0], valuedArg[1]);
                 } else {
-                    arguments[i] = new Argument(args[i], null);
+                    arguments[i] = new Argument(args[i], "");
                 }
             }
 

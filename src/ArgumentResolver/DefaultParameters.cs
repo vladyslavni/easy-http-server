@@ -6,7 +6,7 @@ namespace easy_http_server
     public class DefaultParameters
     {
         [Parameter("-h", "--help", "Show help message.")]
-        public static void HelpParam()
+        public static void HelpParam(string value)
         {
             MethodInfo[] methods = Params.FindMethods();
 
